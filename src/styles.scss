@@ -1,1 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: "Epilogue", sans-serif, "Helvetica Neue", sans-serif; }
+
+.add-tag-dialog .mat-dialog-container::-webkit-scrollbar {
+  width: 7px;
+}
+
+.add-tag-dialog .mat-dialog-container::-webkit-scrollbar {
+  background-color: white;
+  border-radius: 30px;
+}
+
+.add-tag-dialog .mat-dialog-container::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.add-tag-dialog .mat-dialog-container::-webkit-scrollbar-thumb {
+  background-color: lightslategray;
+  border-radius: 30px;
+}
+//::-webkit-scrollbar {
+//  width: 1em;
+//}
+//
+//::-webkit-scrollbar-track {
+//  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+//}
+//
+//::-webkit-scrollbar-thumb {
+//  //border-radius: 10px;
+//  //-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+//  //background-color: #fcefee;
+//  background-color: lightgray;
+//  border-radius: 5px;
+//}

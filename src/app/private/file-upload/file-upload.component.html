@@ -1,0 +1,35 @@
+<h3>Publish to image provider</h3>
+<ngx-dropzone class="drop-zone" (change)="onSelect($event)">
+  <ngx-dropzone-label class="drop-label">
+    <div class="label-content">
+      <button mat-icon-button>
+        <mat-icon style="font-size: 100px;">add_photo_alternate</mat-icon>
+      </button>
+    </div>
+  </ngx-dropzone-label>
+  <ngx-dropzone-label class="label-header">
+    <h1>Drag and drop a file</h1>
+  </ngx-dropzone-label>
+  <ngx-dropzone-label class="label-description">
+    <li class="list-item"><strong>High quality photos</strong></li>
+    <li class="list-item">Only upload photos you <strong>own the rights to</strong></li>
+    <li class="list-item">Respect the intellectual property of others</li>
+    <li class="list-item">Photos are <strong>clear and original</strong></li>
+    <li class="list-item">Zero tolerance for nudity, violence or hate</li>
+    <li class="list-item">Read the provider terms</li>
+  </ngx-dropzone-label>
+  <ngx-dropzone-preview class="preview"
+                        *ngFor="let f of files"
+                        [removable]="true"
+                        (removed)="onRemove(f)"
+                        [file]="f">
+    <ngx-dropzone-label style="color: black" class="label-header">{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+  </ngx-dropzone-preview>
+</ngx-dropzone>
+
+<mat-divider></mat-divider>
+
+<div class="action">
+  <button (click)="close()" style="margin-right: 5px" color="primary" mat-flat-button>Cancel</button>
+  <button *ngIf="isValidToUpload" (click)="upload()" color="primary" mat-flat-button>Upload</button>
+</div>

@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="left">
+    <a>
+      <mat-icon style="margin-top: 5px">android</mat-icon>
+    </a>
+    <a style="margin-left: 10px;">
+      <mat-icon style="text-align: center; margin-top: 5px">donut_small</mat-icon>
+    </a>
+    <a style="margin-left: 10px;">
+      <mat-icon style="margin-top: 5px">widgets</mat-icon>
+    </a>
+    <a style="margin-left: 10px; font-family: Epilogue,serif">
+      <strong>Welcome to Image Provider</strong>
+    </a>
+  </div>
+  <div class="center">
+    <div style="display: flex; flex-direction: row;" id="srh">
+      <input (keyup.enter)="search(element.value)" id="search-input" type="text" #element
+             (keyup)="searchTerm$.next($event.target.value)"
+             matInput [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option #matOption (click)="search(matOption.value)"
+                    *ngFor="let option of tags$ | async"
+                    [value]="option.tag">
+          {{option.tag}}
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+
+    <div id="btn">
+      <button class="search-btn" mat-button style="margin-bottom: 2px">
+        <mat-icon style="font-size: 20px;" matPrefix>search</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="($isLoggedIn | async) == false" class="auth-container">
+    <button (click)="login()" mat-raised-button id="login" class="">Login</button>
+
+  </div>
+  <div *ngIf="($isLoggedIn | async) == false" class="signUp">
+    <button (click)="signup()" mat-raised-button id="sign-up">Register</button>
+  </div>
+
+  <div *ngIf="($isLoggedIn | async) == true" class="submit_image">
+    <button (click)="navigateUploadImage()" mat-flat-button>Submit a picture</button>
+  </div>
+
+
+  <div class="account_icon_container" *ngIf="($isLoggedIn | async) == true">
+    <div class="msg">
+      <span class="welcome_msg"
+            style="color: white; margin-left: 10%; font-size: 15px"
+            *ngIf="($isLoggedIn | async) == true">
+      <strong>{{ "Hi, " + ($userName | async) || "User" }}</strong>
+    </span>
+    </div>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon *ngIf="!($profileImage | async)"
+                style="color: white;font-size: 50px">account_circle</mat-icon>
+      <img *ngIf="($profileImage | async)"
+           class="img"
+           [src]="$profileImage | async">
+      <mat-menu #menu="matMenu">
+<!--        <button routerLink="/profile" mat-menu-item>-->
+<!--          <mat-icon>person</mat-icon>-->
+<!--          <span>View profile</span>-->
+<!--        </button>-->
+        <button (click)="navigateToUser()" mat-menu-item>
+          <mat-icon>person</mat-icon>
+          <span>View profile</span>
+        </button>
+        <button (click)="navigateToSettings()" mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Account settings</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button (click)="logout()" mat-menu-item>
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </button>
+  </div>
+</div>
+
+
+
+
+
+

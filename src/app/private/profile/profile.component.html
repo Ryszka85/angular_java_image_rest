@@ -1,0 +1,73 @@
+<app-search-toolbar></app-search-toolbar>
+<div class="container">
+  <!--  <div class="filler_left"></div>-->
+  <div class="center">
+    <div class="profile_icon">
+<!--      <button *ngIf="!($logged | async)" disabled mat-icon-button-->
+<!--              aria-label="Example icon button with a home icon">-->
+<!--        <mat-icon style="font-size: 195px">account_circle</mat-icon>-->
+<!--      </button>-->
+
+      <mat-icon class="profile-img" *ngIf="!($profileImg | async)"
+                style="font-size: 165px; color: lightgray; margin-right: 5px">
+        account_circle
+      </mat-icon>
+      <!--      <img *ngIf="($logged | async) as loggedUser" class="profile-img" [src]="loggedUser.profileImgPath">-->
+      <img *ngIf="($profileImg | async) as src" class="profile-img" [src]="src">
+    </div>
+    <div class="title">
+      <div class="user-name">
+        <span *ngIf="$userDetails | async as loggedUser"
+              style="font-size: 40px; margin-top: 2%; margin-bottom: 6px; line-height: 40px">
+          <strong>
+            {{loggedUser.firstName + " " + loggedUser.lastName}}
+          </strong>
+        </span>
+<!--          <span *ngIf="$logged | async as loggedUser"-->
+<!--                style="font-size: 40px; margin-top: 2%; margin-bottom: 6px; line-height: 40px">-->
+<!--          <strong>-->
+<!--            {{loggedUser.firstName + " " + loggedUser.lastName}}-->
+<!--          </strong>-->
+<!--        </span>-->
+      </div>
+      <br>
+      <div class="user-name">
+        <p style="font-size: 17px; line-height: 28px">
+          Download free, beautiful high-quality photos curated <br> by
+          <span *ngIf="$userDetails | async as userDetails">
+            {{userDetails.firstName + " " + userDetails.lastName }}
+         </span>.
+<!--          <span *ngIf="$logged | async as loggedUser">-->
+<!--            {{loggedUser.firstName + " " + loggedUser.lastName }}-->
+<!--         </span>.-->
+        </p>
+      </div>
+      <div *ngIf="editableProfile | async" class="edit">
+        <button routerLink="/edit-profile" style="" mat-icon-button>
+          <mat-icon>edit</mat-icon>
+          Edit profile
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-tab-group class="mat-tab-group">
+  <mat-tab class="tab" label="Gallery">
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">photo_library</mat-icon>
+      Images
+    </ng-template>
+    <app-image-content [isProfile]="true"
+                       [data]="$userImages"></app-image-content>
+  </mat-tab>
+  <mat-tab label="Likes">
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+      Likes
+    </ng-template>
+    <app-image-content [isProfile]="false"
+                       [data]="$userLikes"></app-image-content>
+  </mat-tab>
+  <mat-tab label="Third"> Content 3</mat-tab>
+</mat-tab-group>
