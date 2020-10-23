@@ -14,8 +14,6 @@
 <!--</div>-->
 
 
-
-
 <div class="container">
   <div *ngFor="let item of (models | async); index as i; trackBy: track" class="tile">
 
@@ -40,19 +38,35 @@
             <img id="img-profile" [src]="item.user.profileImgPath" alt="">
             <span id="user-txt">{{ item.user.email.substr(0, item.user.email.indexOf('@')) }}</span>
           </a>
-<!--          <a mat-button *ngIf="item.user.profileImgPath" class="header2" (click)="navigateToUser(item)">-->
-<!--            {{ item.user.email.substr(0, item.user.email.indexOf('@')) }}-->
-<!--          </a>-->
+          <!--          <a mat-button *ngIf="item.user.profileImgPath" class="header2" (click)="navigateToUser(item)">-->
+          <!--            {{ item.user.email.substr(0, item.user.email.indexOf('@')) }}-->
+          <!--          </a>-->
         </div>
 
 
+        <div class="link">
+          <a mat-button>
+            <mat-icon matTooltip="This image is public" (click)="changeImageDetails(item)"
+                      *ngIf="item.public">public
+            </mat-icon>
+            <mat-icon matTooltip="This image is private" (click)="changeImageDetails(item)"
+                      *ngIf="!item.public">lock
+            </mat-icon>
+          </a>
+        </div>
+
         <div class="content-btn">
-          <button style="color: white; font-size: 50px" mat-icon-button [matMenuTriggerFor]="menu"
+          <button matTooltip="Click to open menu"
+                  style="color: white; font-size: 50px"
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
                   aria-label="Example icon-button with a menu">
             <mat-icon style="font-size: 30px">more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button *ngIf="editable && isProfile" (click)="showAddTagsDialog(item)" mat-menu-item>
+            <button *ngIf="editable && isProfile"
+                    (click)="showAddTagsDialog(item)"
+                    mat-menu-item>
               <mat-icon>edit</mat-icon>
               <span>Add tags</span>
             </button>
@@ -64,10 +78,16 @@
               <mat-icon>save_alt</mat-icon>
               <span>Download image</span>
             </a>
+            <a matTooltip="Go to {{item.linkReference}}"
+               mat-menu-item
+               [href]="item.linkReference">
+              <mat-icon>public</mat-icon>
+              <span>Go to source</span>
+            </a>
           </mat-menu>
         </div>
         <div class="likes">
-          <a class="thumbUp"  (click)="likeImage(item, item.userId)"
+          <a class="thumbUp" (click)="likeImage(item, item.userId)"
              mat-icon-button>
             <mat-icon style="font-size: 30px; color: white">thumb_up</mat-icon>
           </a>

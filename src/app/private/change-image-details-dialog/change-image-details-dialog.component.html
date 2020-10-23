@@ -1,0 +1,91 @@
+<div class="container" *ngIf="$selectedImage | async as img">
+  <h2 style="font-family: 'agave Nerd Font',sans-serif;">
+    Change image details
+  </h2>
+  <mat-divider></mat-divider>
+  <br>
+  <h4 style="font-family: 'agave Nerd Font',sans-serif">
+    Image : <strong>{{data.name}}</strong>
+  </h4>
+
+  <div id="access-type">
+    <p><strong>Choose Access type :</strong></p>
+    <mat-radio-group *ngIf="$selectedImage | async as img"
+                     [formControl]="isPublic"
+                     (change)="changeStuff($event)"
+                     aria-label="Select an option">
+      <mat-radio-button matTooltip="When you change to public your images can be viewed by the community"
+                        matTooltipPosition="below"
+                        [checked]="img.public === true"
+                        value="1">
+        <div class="options">
+          <mat-icon>public</mat-icon>
+          Public
+        </div>
+      </mat-radio-button>
+      <mat-radio-button matTooltip="When you change to private your images can not be viewed by the community"
+                        matTooltipPosition="below"
+                        [checked]="img.isPublic === false"
+                        value="0">
+        <div class="options">
+          <mat-icon>lock</mat-icon>
+          Private
+        </div>
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div *ngIf="$selectedImage | async as img" class="image-details">
+    <img width="380px" height="400px"
+         class="img-content"
+         [src]="img.link" alt="">
+
+    <div class="image-detail">
+      <a style="color: black" disabled disableRipple mat-icon-button>
+        <mat-icon>cloud_download</mat-icon>
+        <span>Downloads</span>
+      </a>
+      <h2 id="downloaded"><strong>{{img.downloaded}}</strong></h2>
+      <h5 id="testus">+ {{img.downloaded}} downloads since last month</h5>
+      <mat-divider></mat-divider>
+
+      <div class="image-views">
+        <a style="color: black" disabled disableRipple mat-icon-button>
+          <mat-icon>visibility</mat-icon>
+          <span>Views</span>
+        </a>
+        <h2 id="views"><strong>{{img.downloaded}}</strong></h2>
+        <h5>+ {{img.downloaded}} view since last month</h5>
+        <mat-divider></mat-divider>
+      </div>
+      <div class="image-likes">
+        <a style="color: black" disabled disableRipple mat-icon-button>
+          <mat-icon>thumb_up</mat-icon>
+          <span>Likes</span>
+        </a>
+        <h2 id="likes"><strong>{{img.liked}}</strong></h2>
+        <h5>+ {{img.liked}} view since last month</h5>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <a style="color: black" mat-icon-button disabled class="link_ref_label">
+    <mat-icon>public</mat-icon>
+    URL link reference :
+  </a>
+  <mat-form-field id="url_input" appearance="fill" class="example-full-width">
+    <mat-label>URL to image</mat-label>
+    <input matInput (ngModelChange)="urlReferenceValidator()"
+           [formControl]="urlReference"
+           placeholder="http:\\www.xxx.com">
+    <mat-error>Invalid url</mat-error>
+  </mat-form-field>
+
+  <button style="margin-right: 5px" color="primary" *ngIf="$detailsChanged | async" mat-raised-button (click)="saveChanges()">Save changes</button>
+  <button color="warn" mat-raised-button (click)="changeDetails(img)">Delete image</button>
+
+
+</div>
+

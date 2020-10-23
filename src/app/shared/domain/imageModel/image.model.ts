@@ -6,8 +6,17 @@ export interface ImageModel {
   link: string;
   name: string;
   profileImg?: string;
+  linkReference?: string;
+  isPublic?: boolean;
   tags: TagModel[];
   user?: BaseUserDetails;
+  downloaded?: number;
+  liked?: number;
+}
+
+export interface ImageViewModel {
+  imageModel: ImageModel;
+  owner: boolean;
 }
 
 

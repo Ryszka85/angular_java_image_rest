@@ -16,15 +16,18 @@
           <mat-label>Firstname</mat-label>
           <input [formControl]="firstNameControl"
                  matInput placeholder="John">
+          <mat-icon matSuffix>edit</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="example-full-width">
           <mat-label>Lastname</mat-label>
-          <input [formControl]="lastNameControl" matInput placeholder="Doe">
+          <input readonly [formControl]="lastNameControl" matInput placeholder="Doe">
+          <mat-icon matSuffix>edit</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="fill" class="example-full-width">
           <mat-label>Email</mat-label>
-          <input [formControl]="emailControl" matInput placeholder="doe@gmail.com">
+          <input readonly [formControl]="emailControl" matInput placeholder="doe@gmail.com">
+          <mat-icon matSuffix>edit</mat-icon>
         </mat-form-field>
       </form>
   </div>
@@ -33,13 +36,11 @@
     <div class="form-2">
       <mat-form-field id="userName" appearance="fill" class="example-full-width">
         <mat-label>Username</mat-label>
-        <input [formControl]="userNameControl" matInput placeholder="johnDoe">
+        <input readonly [formControl]="userNameControl" matInput placeholder="johnDoe">
+        <mat-icon matSuffix>edit</mat-icon>
       </mat-form-field>
     </div>
     <div class="actions">
-      <div class="save_changes">
-        <button mat-raised-button>Save changes</button>
-      </div>
       <div class="change-pswd">
         <button mat-raised-button>Change password</button>
       </div>

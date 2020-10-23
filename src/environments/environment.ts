@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://localhost:8880/image-app/"
+  apiUrl: "http://localhost:8880/image-app/",
+  google_id: "200318745451-u9viua8onpt25sdmknka7i89uhdrknsd.apps.googleusercontent.com"
 };
 
 /*

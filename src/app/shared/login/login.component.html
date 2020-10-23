@@ -7,14 +7,14 @@
   <!--    -->
   <!--  </div>-->
   <p>
-    <mat-form-field [style.width.px]=300>
+    <mat-form-field [style.width.px]=330>
       <mat-label>Email</mat-label>
       <input [style.fontSize.px]="15"
              matInput [formControl]="emailFormField">
     </mat-form-field>
   </p>
   <p>
-    <mat-form-field [style.width.px]=300>
+    <mat-form-field [style.width.px]=330>
       <mat-label>Password</mat-label>
       <input [style.fontSize.px]="15" type="password"
              matInput [formControl]="passwordFormField">
@@ -31,8 +31,13 @@
 </mat-dialog-content>
 <div class="container">
   <mat-dialog-actions>
-    <button (click)="login()" mat-raised-button color="primary">Login</button>
-    <button (click)="close()" mat-raised-button color="warn">Close</button>
+    <div style="display: flex; flex-direction: row; align-content: space-evenly">
+      <button id="loginBtn" (click)="login()" mat-raised-button color="primary">Login</button>
+      <button (click)="close()" mat-raised-button color="warn">Close</button>
+      <button (click)="googleLogin()" mat-icon-button>
+        <img src="../../../assets/btn_google_signin_dark_normal_web.png" alt="FOO">
+      </button>
+    </div>
   </mat-dialog-actions>
 </div>
 

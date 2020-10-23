@@ -41,7 +41,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.route.paramMap
       .subscribe(param => {
         const userId = param.get('userId');
-        this.store.dispatch(new UserDetailsActions.GetUserDetails(userId));
+        this.store
+          .dispatch(new UserDetailsActions.GetUserDetails(userId))
         this.$logged.subscribe(loggedUser => {
           if (loggedUser) {
             console.log(loggedUser)
@@ -49,11 +50,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
           }
         })
       })
-
-    this.editableProfile.subscribe(value => console.log(value))
-
-
-
 
     const loggedUser : BaseUserDetails =
       this.store.selectSnapshot(LoginStateModel.loggedInUser);

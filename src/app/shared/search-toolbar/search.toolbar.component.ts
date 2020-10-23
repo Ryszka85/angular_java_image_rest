@@ -31,6 +31,8 @@ import {UserDetailsActions} from "../app-state/actions/user-details.action";
 import {LoggedUserDetailsState} from "../app-state/states/logged-user-details.state";
 import {IUserAuthState} from "../domain/UserAuthStateModel";
 import {BaseUserDetails} from "../domain/userModel/user-details.model";
+import {GoogleLoginProvider, SocialAuthService} from "angularx-social-login";
+import LoggedUserDetails = AuthenticationActions.LoggedUserDetails;
 
 
 @Component({
@@ -44,9 +46,9 @@ export class SearchToolbarComponent implements OnInit, OnDestroy {
   searchTerm$ = new Subject<string>();
   @Select(SearchByTagState.getFetchedTagList) tags$: Observable<TagModel[]>;
   @Select(LoginStateModel.isLoggedIn) $isLoggedIn;
-  @Select(LoginStateModel.profileImg) $profileImage;
+  @Select(LoggedUserDetailsState.getProfile) $profileImage;
   @Select(LoginStateModel.loggedInUser) $loggedUser;
-  @Select(LoginStateModel.userName) $userName;
+  @Select(LoggedUserDetailsState.loggedUsername) $userName;
 
   // ng until destroy
 
@@ -75,7 +77,11 @@ export class SearchToolbarComponent implements OnInit, OnDestroy {
     let val: BaseUserDetails =
       this.store.selectSnapshot(LoginStateModel.loggedInUser);
     if (val === undefined || val === null)
-      this.store.dispatch(new AuthenticationActions.IsLoggedIn());
+      this.store.dispatch(new AuthenticationActions.IsLoggedIn())
+        .subscribe(value => {
+          this.store.dispatch(new LoggedUserDetails(value.Authentication.user.userId))
+            .subscribe(value1 => console.log(value1));
+        });
   }
 
   search(selected: string): void {
@@ -102,7 +108,7 @@ export class SearchToolbarComponent implements OnInit, OnDestroy {
   login(): void {
     const ref = new MatDialogConfig();
     ref.disableClose = true;
-    this.dialog.open(LoginComponent, {width: '360px'});
+    this.dialog.open(LoginComponent, {width: '380px'});
   }
 
   logout(): void {
@@ -112,7 +118,9 @@ export class SearchToolbarComponent implements OnInit, OnDestroy {
   }
 
   navigateUploadImage(): void {
-    this.store.dispatch(new Navigate(['upload']))
+    let loggedUser: BaseUserDetails =
+      this.store.selectSnapshot(LoginStateModel.loggedInUser);
+    this.router.navigate(['upload', {userId: loggedUser.userId}]);
   }
 
 

@@ -7,8 +7,12 @@ body { margin: 0; font-family: "Epilogue", sans-serif, "Helvetica Neue", sans-se
   width: 7px;
 }
 
+.image-details .mat-dialog-container::-webkit-color-swatch {
+
+}
+
+
 .add-tag-dialog .mat-dialog-container::-webkit-scrollbar {
-  background-color: white;
   border-radius: 30px;
 }
 

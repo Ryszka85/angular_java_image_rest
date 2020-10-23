@@ -4,7 +4,7 @@ import {BehaviorSubject, Observable, of, Subject} from "rxjs";
 import {Select, Store} from "@ngxs/store";
 import {ImagesByTagState} from "../app-state/states/images-by-tag-state";
 import {ImageModelList} from "../domain/imageModel/image-model-list";
-import {ImageModel} from "../domain/imageModel/image.model";
+import {ImageModel, ImageViewModel} from "../domain/imageModel/image.model";
 import {map, switchMap, tap, throttleTime} from "rxjs/operators";
 import {ImageTile} from "./image-tile";
 import {TileRandomizer} from "./tile-randomizer";
@@ -59,12 +59,14 @@ export class ImageContentComponent implements OnInit {
   breakpoint: any;
   downloadLink: any;
   rows = new Subject<ImageRowView[]>();
+  imageViewModel: ImageViewModel[];
 
   constructor(private store: Store,
               public imgReqService: ImageRequestService,
               private router: Router,
               private updateUserService: UpdateUserService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private downloadService: ImageDownloadService) {
   }
 
 
@@ -103,31 +105,35 @@ export class ImageContentComponent implements OnInit {
         if (data) {
           for (let i = 0; i < data.length; i++) {
             if (data[i].user.userId !== id) {
+              console.log(data[i]);
+              console.log(id);
               this.editable = false;
-              console.log("hallo");
               break;
-            } else this.editable = true;
+            } else {
+              this.editable = true;
+            }
           }
-          console.log(this.editable);
         }
       })
     })
 
-    const batchMap = this.offset.pipe(
-      throttleTime(500),
-      tap(x => console.log(x))
-    );
+    console.log(this.editable);
 
+    // const batchMap = this.offset.pipe(
+    //   throttleTime(500),
+    //   tap(x => console.log(x))
+    // );
+    //
+    //
+    // batchMap.subscribe(value => console.log(value))
 
-    batchMap.subscribe(value => console.log(value))
-
-    this.fData$.subscribe(value => {
-      if (value !== undefined && value != null) {
-        this.dataEvenRowSize = Math.floor(value.length / 3);
-        this.data = value;
-        this.evenRowLimit.next(true)
-      }
-    })
+    // this.fData$.subscribe(value => {
+    //   if (value !== undefined && value != null) {
+    //     this.dataEvenRowSize = Math.floor(value.length / 3);
+    //     this.data = value;
+    //     this.evenRowLimit.next(true)
+    //   }
+    // })
 
   }
 
@@ -161,7 +167,12 @@ export class ImageContentComponent implements OnInit {
 
   download(name: string, userId: string): void {
     console.log(name)
-    this.downloadLink = ImageRequestService.DOWNLOAD_URL + name + "/user/" + userId;
+    // this.downloadService.getImagesByUserId(userId, name)
+    //   .subscribe(value => console.log(value));
+    this.downloadLink = ImageDownloadService.DOWNLOAD_URL + name +
+      "/user/" + userId;
+
+    // window.location.href='https://storage.googleapis.com/htlimagerestapi.appspot.com/NGfQZJB4mOA33k8q0ZzLuNDmypgrP0/aycUAkI1h1g.jpg';
   }
 
   clickedTag(tag: string) {
@@ -205,6 +216,20 @@ export class ImageContentComponent implements OnInit {
 
   }
 
+  changeImageDetails(item: ImageModel): void {
+    if (this.isProfile && this.editable) {
+      this.store.dispatch(new SelectImage(item))
+      this.dialog.open(ChangeImageDetailsDialogComponent,
+        {
+          width: '780px',
+          height: '780px',
+          data: item
+        }
+      );
+    }
+  }
+
+
   showAddTagsDialog(item: ImageModel): void {
     const ref = new MatDialogConfig();
     // ref.disableClose = true;
@@ -224,7 +249,6 @@ export class ImageContentComponent implements OnInit {
         this.store.dispatch(new Navigate(['profile', {userId: item.user.userId}]))
       })
   }
-
 
   // when not logged user likes image then redirect to login page
 
@@ -250,3 +274,7 @@ import {ImageRowMapper} from "../image-row-mapper";
 import {UpdateUserService} from "../../serviceV2/update-user.service";
 import {AuthenticationActions} from "../app-state/actions/authentication-action";
 import IsLoggedIn = AuthenticationActions.IsLoggedIn;
+import {HttpClient} from "@angular/common/http";
+import * as FileSaver from "file-saver";
+import {ImageDownloadService} from "../../serviceV2/image-download.service";
+import {ChangeImageDetailsDialogComponent} from "../../private/change-image-details-dialog/change-image-details-dialog.component";

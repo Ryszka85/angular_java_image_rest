@@ -68,7 +68,8 @@ export class LoginStateModel {
 
   @Action(AuthenticationActions.LoginAction)
   login(ctx: StateContext<IUserAuthState>, action: AuthenticationActions.LoginAction) {
-    return this.authService.login(action.userLoginModel)
+    const loginType = action.userLoginModel.password === undefined ? "GOOGLE" : "DEFAULT";
+    return this.authService.login(action.userLoginModel, loginType)
       .pipe(
         tap(response => {
           const status = response.status === 200;
@@ -76,6 +77,7 @@ export class LoginStateModel {
           const state = ctx.getState();
           console.log(response);
           const body = response.body;
+          console.log(body)
           ctx.patchState({
             ...state,
             user: {

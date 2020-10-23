@@ -58,6 +58,17 @@ import { MatChipsModule } from "@angular/material/chips";
 import {UpdateUserProfileImageState} from "./shared/app-state/states/update-user-profile-image.state";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider,
+  AmazonLoginProvider,
+} from 'angularx-social-login';
+
+import {MatRadioModule} from '@angular/material/radio';
+import {environment} from "../environments/environment";
+import { ChangeImageDetailsDialogComponent } from './private/change-image-details-dialog/change-image-details-dialog.component';
 
 
 @NgModule({
@@ -75,10 +86,13 @@ import { VirtualScrollerModule } from 'ngx-virtual-scroller';
     UserGalleryComponent,
     ImageDetailViewComponent,
     EditProfileComponent,
-    AddTagsDialogComponent
+    AddTagsDialogComponent,
+    ChangeImageDetailsDialogComponent
   ],
   imports: [
     BrowserModule,
+    MatTooltipModule,
+    MatRadioModule,
     MatChipsModule,
     MatSnackBarModule,
     ReactiveFormsModule,
@@ -104,6 +118,7 @@ import { VirtualScrollerModule } from 'ngx-virtual-scroller';
     NgxDropzoneModule,
     FormsModule,
     HttpClientModule,
+    SocialLoginModule,
     NgxsModule.forRoot([
       ImagesByTagState,
       SearchByTagState,
@@ -134,6 +149,20 @@ import { VirtualScrollerModule } from 'ngx-virtual-scroller';
     },
     {
       provide: LocationStrategy, useClass: HashLocationStrategy
+    },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              environment.google_id
+            ),
+          },
+        ],
+      } as SocialAuthServiceConfig,
     }
   ],
   bootstrap: [AppComponent]

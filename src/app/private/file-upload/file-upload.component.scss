@@ -1,20 +1,69 @@
+#header {
+  font-size: 30px;
+  margin-bottom: 5px;
+}
 
-  .drop-zone {
-    height: 300px;
+#link_ref {
+  font-size: 17px;
+  margin-top: 15px;
+}
+
+.link_ref_label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 17px;
+}
+
+
+
+#access-type {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  p {
+    margin-right: 10px;
+    font-size: 17px;
+  }
+  .options {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
+    flex-direction: row;
+    align-content: space-between;
+    align-items: center;
   }
-
-
-  .drop-zone {
-    height: 300px;
-    display: grid;
-    grid-template-columns: 100%;
-    justify-content: center;
+  .mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
   }
+}
 
+#url_input {
+  width: 100%;
+}
+
+//.link_reference {
+//  display: flex;
+//  flex-direction: row;
+//  align-items: center;
+//}
+
+.drop-zone {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+
+.drop-zone {
+  height: 300px;
+  display: grid;
+  grid-template-columns: 100%;
+  justify-content: center;
+}
 
 
 //.container {
@@ -71,5 +120,5 @@
 .action {
   margin-top: 16px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }

@@ -19,6 +19,11 @@ export class SelectImageState {
   }
 
   @Selector()
+  static getSelectedImageUrlReference(state: SelectImage): string {
+    return state.image.linkReference;
+  }
+
+  @Selector()
   static getSelectedImageId(state: SelectImage): string {
     return state.image.imageId;
   }
@@ -27,6 +32,12 @@ export class SelectImageState {
   static getSelectedLink(state: ImageModel): string {
     return state.link;
   }
+
+  @Selector()
+  static getIsPublic(state: SelectImage): boolean {
+    return state.image.isPublic;
+  }
+
   @Action(SelectImage)
   selectImage(ctx: StateContext<SelectedImage>, action: SelectImage) {
     const state = ctx.getState();

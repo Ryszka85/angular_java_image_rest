@@ -62,15 +62,19 @@ export class EditProfileComponent implements OnInit {
 
 
 
-    this.formGroup = this.formBuilder.group({
-      firstName: null
-    })
-    if (loggedUser !== undefined && loggedUser !== null) {
-      this.store.dispatch(
-        new UserDetailsActions
-          .GetUserDetails(loggedUser.userId)
-      )
-    } else this.store.dispatch(new Navigate(['/login']))
+    this.firstNameControl.valueChanges.subscribe(value => console.log(value))
+
+    // this.formGroup = this.formBuilder.group({
+    //   firstName: null
+    // })
+    // if (loggedUser !== undefined && loggedUser !== null) {
+    //   this.store.dispatch(
+    //     new UserDetailsActions
+    //       .GetUserDetails(loggedUser.userId)
+    //   )
+    // } else this.store.dispatch(new Navigate(['/login']))
+
+
 
   }
 

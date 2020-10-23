@@ -1,6 +1,7 @@
 import {Observable} from "rxjs";
 import {ImageModel} from "../../domain/imageModel/image.model";
 import {ImagesByTagNameQueryImpl} from "../../domain/imageModel/ImagesByTagNameQuery";
+import {UploadImageModel} from "../../domain/imageModel/upload-image.model";
 
 export class ImagesByUserIDAction {
   static readonly type = '[ImageAPI] Images by userId';
@@ -19,7 +20,7 @@ export class ImagesNextPageAction {
 
 export class UploadImage {
   static readonly type = '[ImageAPI] Upload image';
-  constructor(public userId: string, public file: FormData) { }
+  constructor(public uploadModel: UploadImageModel) { }
 }
 
 export class SelectImage {

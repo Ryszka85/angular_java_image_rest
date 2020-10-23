@@ -58,13 +58,14 @@ export class UserDetailsState {
   }
 
   @Action(UserDetailsActions.GetUserDetails)
-  createNewUser(ctx: StateContext<BaseUserDetails>,
-                action: UserDetailsActions.GetUserDetails): Observable<BaseUserDetails> {
+  userDetails(ctx: StateContext<BaseUserDetails>,
+              action: UserDetailsActions.GetUserDetails): Observable<BaseUserDetails> {
     return this.authService.getUserDetails(action.userId)
       .pipe(
         tap(response => {
           console.log(response)
           const state = ctx.getState();
+          console.log(response.images);
           ctx.setState({
             ...state,
             firstName: response.firstName,

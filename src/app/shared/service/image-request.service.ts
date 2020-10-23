@@ -15,7 +15,7 @@ export class ImageRequestService {
   public $bSubject = new BehaviorSubject<ImageModel[]>(null);
   // private readonly SEARCH_URL: string = "http://localhost:8880/image-app/images/search/by/tag/";
   private readonly SEARCH_URL: string = environment.apiUrl + "library/search-by/tag/";
-  public static readonly DOWNLOAD_URL = environment.apiUrl + "library/download/file/";
+
   public static readonly ALL_IMAGES_BY_USERID = environment.apiUrl + "library/search-by/user/";
   private readonly UPLOAD_PROFILE_IMAGE = environment.apiUrl + "user/set/profile-image/";
   private readonly UPLOAD_TAG = environment.apiUrl + "image/update/tags/";

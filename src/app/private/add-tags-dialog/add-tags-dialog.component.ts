@@ -44,7 +44,7 @@ export class AddTagsDialogComponent implements OnInit {
   constructor(private store: Store,
               private imageService: ImageRequestService,
               @Inject(MAT_DIALOG_DATA) public data: ImageModel,
-              private dialogRef: MatDialogRef<AddTagsDialogComponent>,) {
+              private dialogRef: MatDialogRef<AddTagsDialogComponent>) {
   }
 
   ngOnInit(): void {

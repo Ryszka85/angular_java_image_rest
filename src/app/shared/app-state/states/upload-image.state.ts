@@ -29,16 +29,20 @@ export class UploadImageState {
   @Action(UploadImage)
   uploadImage(ctx: StateContext<UploadImageModel>,
               action: UploadImage): Observable<any> {
+
+    // const userId = action.uploadModel.userId;
+    // const image = action.uploadModel.file;
     return this.uploadService
-      .addToUserLibrary(action.userId, action.file)
+      .addToUserLibrary(action.uploadModel)
       .pipe(
         tap(response => {
-          console.log(response)
+          console.log(response.status)
           const state = ctx.getState();
           ctx.setState({
             ...state,
-            userId: action.userId,
-            file: action.file
+            userId: action.uploadModel.userId,
+            orgFile: action.uploadModel.orgFile,
+            status: response.status === 200
           })
         })
       )
